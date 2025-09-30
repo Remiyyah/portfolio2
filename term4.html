@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            overflow-x: hidden;
+            height: 100vh;
+            transition: justify-content 1s ease-in-out;
+        }
+        /* Terminal Window */
+        .terminal-container {
+            display: flex;
+            flex-direction: column;
+            width: 600px;
+            max-width: 90%;
+            margin-bottom: 40px;
+        }
+        .terminal-bar {
+            background: #444;
+            height: 30px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+        .terminal-buttons {
+            display: flex;
+            gap: 6px;
+        }
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+        .terminal {
+            background: #111;
+            border-radius: 0 0 10px 10px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 1.2em;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            border: 2px solid #377DFF;
+            min-height: 250px;
+        }
+        /* Main Content Container */
+        .main-content-container {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 40px;
+            padding: 0 40px;
+            box-sizing: border-box;
+        }
+        .main-content {
+            padding: 40px 0;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .text-content {
+            max-width: 600px;
+        }
+        h1 {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin: 0;
+        }
+        .highlight {
+            color: #377DFF; /* Blue for name */
+        }
+        .social-links {
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+        }
+        .social-links a img {
+            width: 30px;
+        }
+        .resume-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: 600;
+            color: #000;
+            background: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-right: 15px;
+            transition: background 0.3s ease;
+        }
+        .dynamic-text {
+            font-size: 1.5em;
+            font-weight: 400;
+            margin-top: 20px;
+        }
+        .dynamic-text span {
+            color: #377DFF;
+        }
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 24px;
+            background: #377DFF;
+            animation: blink 0.8s infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        .image-container img {
+            width: 450px;
+            max-width: 100%;
+        }
+        /* Tech Stack Section */
+        .tech-stack {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 40px;
+            padding: 40px 0;
+        }
+
+        .tech-stack h2 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .tech-stack h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .tech-stack h3 {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+        }
+
+        .spheres {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .sphere {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sphere::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .sphere[data-icon="python"]::before {
+            background-image: url('https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original-wordmark.svg');
+        }
+
+        .sphere[data-icon="html5"]::before {
+            background-image: url('https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg');
+        }
+
+        .sphere[data-icon="css3"]::before {
+            background-image: url('https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg');
+        }
+
+        .sphere[data-icon="javascript"]::before {
+            background-image: url('https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg');
+        }
+
+        .sphere[data-icon="typescript"]::before {
+            background-image: url('https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg');
+        }
+
+        .sphere[data-icon="sql"]::before {
+            background-image: url('https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg');
+        }
+
+        .sphere[data-icon="react"]::before {
+            background-image: url('https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg');
+        }
+
+        .sphere[data-icon="nodejs"]::before {
+            background-image: url('https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg');
+        }
+
+        .sphere:hover {
+            transform: rotate(360deg);
+        }
+    </style>
+</head>
+<body>
+    <!-- Terminal Intro -->
+    <div class="terminal-container" id="terminalContainer">
+        <div class="terminal-bar">
+            <div class="terminal-buttons">
+                <div class="terminal-button red"></div>
+                <div class="terminal-button yellow"></div>
+                <div class="terminal-button green"></div>
+            </div>
+        </div>
+        <div class="terminal" id="terminal"></div>
+    </div>
+    <!-- Main Content Container -->
+    <div class="main-content-container" id="mainContentContainer">
+        <!-- Main Portfolio Content -->
+        <div class="main-content" id="mainContent">
+            <div class="container">
+                <div class="text-content">
+                    <h1>Hi, I am <span class="highlight">Jeremy Flagg.</span></h1>
+                    <div class="social-links">
+                        <a href="#"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="30"></a>
+                        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/145/145807.png"></a> <!-- LinkedIn -->
+                        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png"></a> <!-- Gmail -->
+                    </div>
+                    <a href="#" class="resume-button">My Resume</a>
+                    <p class="dynamic-text">I am a <span id="changing-text"></span><span class="cursor"></span></p>
+                </div>
+                <div class="image-container">
+                    <img src="me2.jpg" alt="Developer">
+                </div>
+            </div>
+        </div>
+        <!-- Tech Stack Section -->
+        <section class="tech-stack" id="techStack">
+            <div class="tech-stack-container">
+                <h2>MY SKILLS</h2>
+                <h1>Tech Stack.</h1>
+                <h3>TECHNICAL LANGUAGES</h3>
+                <div class="spheres">
+                    <div class="sphere" data-icon="python"></div>
+                    <div class="sphere" data-icon="html5"></div>
+                    <div class="sphere" data-icon="css3"></div>
+                    <div class="sphere" data-icon="javascript"></div>
+                    <div class="sphere" data-icon="typescript"></div>
+                    <div class="sphere" data-icon="sql"></div>
+                    <div class="sphere" data-icon="react"></div>
+                    <div class="sphere" data-icon="nodejs"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        // Terminal Typing Animation
+        const terminalElement = document.getElementById("terminal");
+        const terminalContainer = document.getElementById("terminalContainer");
+        const mainContentContainer = document.getElementById("mainContentContainer");
+        const mainContent = document.getElementById("mainContent");
+        const techStack = document.getElementById("techStack");
+        const terminalCommands = [
+            "user@portfolio:~$ ssh connect my-website",
+            "Connecting...",
+            "Authenticating...",
+            "Access Granted!",
+            "Loading dashboard..."
+        ];
+        let commandIndex = 0;
+        let charIndex = 0;
+        let typingSpeed = 50;
+
+        function typeTerminalText() {
+            if (commandIndex < terminalCommands.length) {
+                if (charIndex < terminalCommands[commandIndex].length) {
+                    terminalElement.innerHTML += terminalCommands[commandIndex][charIndex];
+                    charIndex++;
+                    setTimeout(typeTerminalText, typingSpeed);
+                } else {
+                    terminalElement.innerHTML += "\n";
+                    commandIndex++;
+                    charIndex = 0;
+                    setTimeout(typeTerminalText, 800);
+                }
+            } else {
+                setTimeout(() => {
+                    terminalContainer.style.opacity = 0;
+                    setTimeout(() => {
+                        terminalContainer.style.display = "none";
+                        mainContentContainer.style.display = "block";
+                        mainContent.style.display = "block";
+                        techStack.style.display = "block";
+                        setTimeout(() => {
+                            mainContentContainer.style.opacity = 1;
+                            mainContent.style.opacity = 1;
+                            techStack.style.opacity = 1;
+                        }, 100);
+                    }, 500);
+                }, 1000);
+            }
+        }
+
+        window.onload = () => {
+            typeTerminalText();
+            setTimeout(startTypingEffect, 6000);
+        };
+
+        // Typing Effect
+        const words = ["Developer...", "Designer...", "Engineer...", "Problem Solver..."];
+        let wordIndex = 0;
+        let letterIndex = 0;
+        let deleting = false;
+
+        function startTypingEffect() {
+            let textElement = document.getElementById("changing-text");
+            let currentWord = words[wordIndex];
+            if (!deleting) {
+                textElement.textContent = currentWord.substring(0, letterIndex + 1);
+                letterIndex++;
+                if (letterIndex === currentWord.length) {
+                    setTimeout(() => deleting = true, 1000);
+                }
+            } else {
+                textElement.textContent = currentWord.substring(0, letterIndex - 1);
+                letterIndex--;
+                if (letterIndex === 0) {
+                    deleting = false;
+                    wordIndex = (wordIndex + 1) % words.length;
+                }
+            }
+            setTimeout(startTypingEffect, deleting ? 50 : 100);
+        }
+    </script>
+</body>
+</html>
